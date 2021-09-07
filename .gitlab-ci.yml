@@ -1,0 +1,13 @@
+image: gradle:7.2-jdk16
+
+pages:
+  stage: deploy
+  script:
+    - gradle bootRun
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+  tags:
+    - docker

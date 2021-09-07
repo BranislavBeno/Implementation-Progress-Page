@@ -8,6 +8,6 @@ pages:
     paths:
       - public
   only:
-    - master
+    - main
   tags:
     - docker

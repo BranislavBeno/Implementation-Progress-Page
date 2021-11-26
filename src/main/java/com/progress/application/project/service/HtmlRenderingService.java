@@ -2,10 +2,10 @@ package com.progress.application.project.service;
 
 import com.progress.application.project.domain.Epic;
 import com.progress.application.project.domain.Issue;
-import j2html.tags.ContainerTag;
 import j2html.tags.DomContent;
 import j2html.tags.Tag;
 import j2html.tags.UnescapedText;
+import j2html.tags.specialized.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -69,19 +69,19 @@ public class HtmlRenderingService {
                         .with(provideBlockquote(), provideTable(), provideFooter()));
     }
 
-    private Tag<ContainerTag> provideBlockquote() {
+    private BlockquoteTag provideBlockquote() {
         return blockquote()
                 .withClasses("blockquote", "text-center", "m-4")
                 .with(h3(title));
     }
 
-    private Tag<ContainerTag> provideFooter() {
+    private PTag provideFooter() {
         return p(String.format("Last update: %s", LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))))
                 .withClasses("text-muted", "text-center");
     }
 
-    private Tag<ContainerTag> provideTable() {
+    private DivTag provideTable() {
         return div()
                 .withClasses("container", "table-responsive-sm")
                 .with(table()
@@ -91,7 +91,7 @@ public class HtmlRenderingService {
                         .with(provideTableHead(), provideTableBody()));
     }
 
-    private Tag<ContainerTag> provideTableHead() {
+    private TheadTag provideTableHead() {
         return thead()
                 .withClasses("bg-dark", "align-middle")
                 .with(tr()
@@ -121,7 +121,7 @@ public class HtmlRenderingService {
         return rows;
     }
 
-    private Tag<ContainerTag> provideTableBody() {
+    private TbodyTag provideTableBody() {
         return tbody().with(provideBodyRows());
     }
 
@@ -133,7 +133,7 @@ public class HtmlRenderingService {
         return rows;
     }
 
-    private List<ContainerTag> provideRows(Epic epic) {
+    private List<TrTag> provideRows(Epic epic) {
         List<Issue> issues = epic.getIssues();
         if (issues.isEmpty()) {
             return List.of(tr()
@@ -142,9 +142,9 @@ public class HtmlRenderingService {
                             td(epic.getTitle()))
                     .with(provideEmptyRew()));
         } else {
-            List<ContainerTag> rows = new ArrayList<>();
+            List<TrTag> rows = new ArrayList<>();
             for (Issue issue : issues) {
-                ContainerTag tag;
+                TrTag tag;
                 if (issues.indexOf(issue) == 0) {
                     tag = tr()
                             .with(td(a(String.valueOf(epic.getIid()))

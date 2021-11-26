@@ -1,9 +1,10 @@
-image: gradle:7.2-jdk16
+image: azul/zulu-openjdk-alpine:17
 
 pages:
   stage: deploy
   script:
-    - gradle bootRun
+    - chmod +x gradlew
+    - ./gradlew :bootRun
   artifacts:
     paths:
       - public

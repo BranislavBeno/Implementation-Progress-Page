@@ -3,36 +3,30 @@ package com.progress.application.project.service;
 import com.progress.application.project.domain.Epic;
 import com.progress.application.project.domain.Issue;
 import com.progress.application.project.domain.Milestone;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
 public class IssueTrackingService {
 
-    private final String epicsUrl;
-    private final String issuesUrl;
+    private final AccessData accessData;
+    private final WorkflowData workflowData;
     private final WebClient webClient;
     private final List<Epic> epics;
     private final List<String> releases;
     private final int releaseCount;
 
-    public IssueTrackingService(@Value("${issue.tracker.uri}") String uri,
-                                @Value("${issue.tracker.access-token}") String accessToken,
-                                @Value("${issue.tracker.epics-url}") String epicsUrl,
-                                @Value("${issue.tracker.issues-url}") String issuesUrl) {
-        this.epicsUrl = epicsUrl;
-        this.issuesUrl = issuesUrl;
+    public IssueTrackingService(AccessData accessData, WorkflowData workflowData) {
+        this.accessData = Objects.requireNonNull(accessData);
+        this.workflowData = Objects.requireNonNull(workflowData);
 
         this.webClient = WebClient.builder()
-                .baseUrl(uri)
+                .baseUrl(accessData.baseUrl())
                 .defaultHeaders(httpHeaders -> {
                     httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-                    httpHeaders.add("PRIVATE-TOKEN", accessToken);
+                    httpHeaders.add("PRIVATE-TOKEN", accessData.accessToken());
                 })
                 .build();
 
@@ -44,7 +38,7 @@ public class IssueTrackingService {
     private Epic[] fetchEpics() {
         return webClient
                 .get()
-                .uri(epicsUrl)
+                .uri(accessData.epicsUrl())
                 .retrieve()
                 .bodyToMono(Epic[].class)
                 .block();
@@ -54,7 +48,7 @@ public class IssueTrackingService {
         return webClient
                 .get()
                 .uri(uriBuilder -> uriBuilder
-                        .path(issuesUrl)
+                        .path(accessData.issuesUrl())
                         .build(epicId))
                 .retrieve()
                 .bodyToMono(Issue[].class)
@@ -65,12 +59,12 @@ public class IssueTrackingService {
         Epic[] fetchedEpics = fetchEpics();
 
         if (fetchedEpics != null) {
-            Set<String> types = Set.of("Hot-Fix", "CR", "Defect", "Feature");
+            Set<String> types = Set.copyOf(workflowData.getTypes());
             for (Epic epic : fetchedEpics) {
                 Issue[] issues = fetchIssues(epic.getIid());
                 for (Issue issue : issues) {
                     String workflow = issue.getLabels().stream()
-                            .filter(l -> l.startsWith("workflow::"))
+                            .filter(l -> l.startsWith(workflowData.getPrefix()))
                             .collect(Collectors.joining(","));
                     issue.setWorkFlow(workflow);
                     issue.getLabels().retainAll(types);

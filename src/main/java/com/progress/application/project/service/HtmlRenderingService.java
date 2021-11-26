@@ -6,9 +6,6 @@ import j2html.tags.ContainerTag;
 import j2html.tags.DomContent;
 import j2html.tags.Tag;
 import j2html.tags.UnescapedText;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +15,6 @@ import java.util.Objects;
 
 import static j2html.TagCreator.*;
 
-@Service
 public class HtmlRenderingService {
 
     private static final String STYLESHEET_ATTR = "stylesheet";
@@ -27,8 +23,7 @@ public class HtmlRenderingService {
     private final String title;
     private final IssueTrackingService issueTrackingService;
 
-    public HtmlRenderingService(@Value(value = "${web.page.title:Progress}") String title,
-                                @Autowired IssueTrackingService issueTrackingService) {
+    public HtmlRenderingService(String title, IssueTrackingService issueTrackingService) {
         this.issueTrackingService = Objects.requireNonNull(issueTrackingService);
         this.title = title;
     }

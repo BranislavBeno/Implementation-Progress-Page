@@ -3,7 +3,7 @@ issue:
         uri: https://gitlab.com
         access-token: FNtD8wyJg_8YhbSUkRsf
         epics-url: /api/v4/groups/13289074/issues?labels=Epic&state=opened
-        issues-url: /api/v4/projects/29437088/issues/{epicId}/links
+        issues-url: /api/v4/projects/31643739/issues/{epicId}/links
     workflow:
         prefix: "workflow::"
         types:

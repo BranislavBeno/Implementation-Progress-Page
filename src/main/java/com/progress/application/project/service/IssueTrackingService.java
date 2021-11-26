@@ -3,27 +3,20 @@ package com.progress.application.project.service;
 import com.progress.application.project.domain.Epic;
 import com.progress.application.project.domain.Issue;
 import com.progress.application.project.domain.Milestone;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
-import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class IssueTrackingService {
 
-    private final String accessToken;
     private final String epicsUrl;
     private final String issuesUrl;
-    private final RestTemplate restTemplate;
+    private final WebClient webClient;
     private final List<Epic> epics;
     private final List<String> releases;
     private final int releaseCount;
@@ -31,16 +24,16 @@ public class IssueTrackingService {
     public IssueTrackingService(@Value("${issue.tracker.uri}") String uri,
                                 @Value("${issue.tracker.access-token}") String accessToken,
                                 @Value("${issue.tracker.epics-url}") String epicsUrl,
-                                @Value("${issue.tracker.issues-url}") String issuesUrl,
-                                @Autowired RestTemplateBuilder restTemplateBuilder) {
-        this.accessToken = accessToken;
+                                @Value("${issue.tracker.issues-url}") String issuesUrl) {
         this.epicsUrl = epicsUrl;
         this.issuesUrl = issuesUrl;
 
-        this.restTemplate = restTemplateBuilder
-                .rootUri(uri)
-                .setConnectTimeout(Duration.ofSeconds(5))
-                .setReadTimeout(Duration.ofSeconds(5))
+        this.webClient = WebClient.builder()
+                .baseUrl(uri)
+                .defaultHeaders(httpHeaders -> {
+                    httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+                    httpHeaders.add("PRIVATE-TOKEN", accessToken);
+                })
                 .build();
 
         this.epics = provideEpics();
@@ -48,30 +41,33 @@ public class IssueTrackingService {
         this.releaseCount = releases.size();
     }
 
-    private HttpEntity<Void> provideHttpEntity() {
-        var headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.set("PRIVATE-TOKEN", accessToken);
-
-        return new HttpEntity<>(headers);
+    private Epic[] fetchEpics() {
+        return webClient
+                .get()
+                .uri(epicsUrl)
+                .retrieve()
+                .bodyToMono(Epic[].class)
+                .block();
     }
 
-    private Epic[] fetchEpics(HttpEntity<Void> entity) {
-        return restTemplate.exchange(epicsUrl, HttpMethod.GET, entity, Epic[].class).getBody();
-    }
-
-    private Issue[] fetchIssues(HttpEntity<Void> entity, int epicId) {
-        return restTemplate.exchange(issuesUrl, HttpMethod.GET, entity, Issue[].class, epicId).getBody();
+    private Issue[] fetchIssues(int epicId) {
+        return webClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(issuesUrl)
+                        .build(epicId))
+                .retrieve()
+                .bodyToMono(Issue[].class)
+                .block();
     }
 
     private List<Epic> provideEpics() {
-        HttpEntity<Void> entity = provideHttpEntity();
-        Epic[] fetchedEpics = fetchEpics(entity);
+        Epic[] fetchedEpics = fetchEpics();
 
         if (fetchedEpics != null) {
             Set<String> types = Set.of("Hot-Fix", "CR", "Defect", "Feature");
             for (Epic epic : fetchedEpics) {
-                Issue[] issues = fetchIssues(entity, epic.getIid());
+                Issue[] issues = fetchIssues(epic.getIid());
                 for (Issue issue : issues) {
                     String workflow = issue.getLabels().stream()
                             .filter(l -> l.startsWith("workflow::"))

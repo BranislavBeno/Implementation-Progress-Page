@@ -1,4 +1,4 @@
-package com.progress.application.project.service;
+package com.progress.application.project.webclient;
 
 import com.progress.application.project.domain.Epic;
 import com.progress.application.project.domain.Issue;

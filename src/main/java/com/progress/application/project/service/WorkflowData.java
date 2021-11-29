@@ -7,7 +7,7 @@ import java.util.List;
 
 @Component
 @ConfigurationProperties(prefix = "issue.workflow")
-public final class WorkflowData {
+public class WorkflowData {
 
     private String prefix;
     private List<String> types;

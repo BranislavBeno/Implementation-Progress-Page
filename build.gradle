@@ -2,12 +2,18 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.6.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'jacoco'
     id 'com.github.ben-manes.versions' version '0.39.0'
 }
 
 group = 'com.progress.application'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+ext {
+    set('jacocoDestinationFile', file("$buildDir/jacoco/test.exec"))
+}
 
 repositories {
     mavenCentral()
@@ -18,10 +24,23 @@ dependencies {
     implementation 'com.j2html:j2html:1.5.0'
     implementation 'commons-io:commons-io:2.11.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.testcontainers:testcontainers"
+    testImplementation "org.testcontainers:junit-jupiter"
+    testImplementation "org.testcontainers:mockserver"
+    testImplementation "org.mock-server:mockserver-client-java:5.11.2"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.testcontainers:testcontainers-bom:1.16.2"
+    }
 }
 
 test {
     useJUnitPlatform()
+    jacoco {
+        destinationFile = file(jacocoDestinationFile)
+    }
     afterSuite { desc, result ->
         if (!desc.parent) {
             println "\nTest result: ${result.resultType}"
@@ -30,5 +49,15 @@ test {
                     "${result.failedTestCount} failed, " +
                     "${result.skippedTestCount} skipped"
         }
+    }
+}
+
+jacoco {
+    toolVersion = '0.8.7'
+}
+
+jacocoTestReport {
+    reports {
+        xml.required
     }
 }

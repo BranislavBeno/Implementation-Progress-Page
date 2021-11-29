@@ -1,0 +1,16 @@
+issue:
+    tracker:
+        access-token: duke
+        epics-url: /epics
+        issues-url: /issues/2
+    workflow:
+        prefix: "workflow::"
+        types:
+            - Hot-Fix
+            - CR
+            - Defect
+            - Feature
+
+spring:
+    main:
+        web-application-type: none

@@ -1,14 +1,30 @@
-image: azul/zulu-openjdk-alpine:17
+image: openjdk:17
+
+before_script:
+  - chmod +x gradlew
+
+unit_test:
+  stage: test
+  script:
+    - curl -L -o agent https://app.testcontainers.cloud/download/testcontainers-cloud-agent_linux_x86-64
+    - chmod +x agent
+    - ./agent &
+    - ./agent wait
+    - ./gradlew test jacocoTestReport
+    - cat build/reports/jacoco/test/html/index.html
+  tags:
+    - docker
 
 pages:
   stage: deploy
   script:
-    - chmod +x gradlew
-    - ./gradlew :bootRun
+    - ./gradlew bootRun
   artifacts:
     paths:
       - public
   only:
     - main
+  needs:
+    - job: unit_test
   tags:
     - docker

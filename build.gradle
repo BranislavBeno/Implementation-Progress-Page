@@ -1,8 +1,9 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.6.0'
+    id 'org.springframework.boot' version '2.6.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'jacoco'
+    id 'org.sonarqube' version '3.3'
     id 'com.github.ben-manes.versions' version '0.39.0'
 }
 
@@ -12,7 +13,8 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 ext {
-    set('jacocoDestinationFile', file("$buildDir/jacoco/test.exec"))
+    set('sonarProjectName', 'ImplementationProgressPage')
+    set('sonarProjectKey', 'com.progress.application.project')
 }
 
 repositories {
@@ -38,9 +40,7 @@ dependencyManagement {
 
 test {
     useJUnitPlatform()
-    jacoco {
-        destinationFile = file(jacocoDestinationFile)
-    }
+    finalizedBy jacocoTestReport
     afterSuite { desc, result ->
         if (!desc.parent) {
             println "\nTest result: ${result.resultType}"
@@ -57,7 +57,14 @@ jacoco {
 }
 
 jacocoTestReport {
+    dependsOn test
     reports {
         xml.required
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "BranislavBeno_ImplementationProgressPage"
     }
 }

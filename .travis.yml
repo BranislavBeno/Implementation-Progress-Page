@@ -11,7 +11,7 @@ script:
   - ./agent &
   - ./agent wait
   - ./gradlew test
-  - ./gradlew jacocoTestReport
+  - ./gradlew jacocoTestReport sonarqube
 
 notifications:
   email:

@@ -22,11 +22,9 @@ pages:
   artifacts:
     paths:
       - public
-  only:
-    - main
   needs:
     - job: unit_test
   rules:
-    - if: $NO_PAGES == null
+    - if: '$NO_PAGES == null'
   tags:
     - docker

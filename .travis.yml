@@ -10,7 +10,6 @@ script:
   - chmod +x agent
   - ./agent &
   - ./agent wait
-  - ./gradlew test
   - ./gradlew jacocoTestReport sonarqube
 
 notifications:

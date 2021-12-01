@@ -10,7 +10,7 @@ unit_test:
     - chmod +x agent
     - ./agent &
     - ./agent wait
-    - ./gradlew test jacocoTestReport sonarqube
+    - ./gradlew jacocoTestReport
     - cat build/reports/jacoco/test/html/index.html
   tags:
     - docker

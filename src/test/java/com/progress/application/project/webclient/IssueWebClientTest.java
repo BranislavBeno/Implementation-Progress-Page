@@ -37,12 +37,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Import(ProjectTestConfiguration.class)
 class IssueWebClientTest {
 
-    @Container
     private static final MockServerContainer MOCK_SERVER = new MockServerContainer(DockerImageName.parse("mockserver/mockserver"));
     private static final String BASE_URL;
 
     static {
-        MOCK_SERVER.start();
+        MOCK_SERVER.withReuse(true).start();
         BASE_URL = "http://%s:%s".formatted(MOCK_SERVER.getContainerIpAddress(), MOCK_SERVER.getServerPort());
     }
 

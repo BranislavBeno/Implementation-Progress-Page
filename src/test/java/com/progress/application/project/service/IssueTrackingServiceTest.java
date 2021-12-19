@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -65,5 +66,15 @@ class IssueTrackingServiceTest {
         // then
         verify(webClient).fetchEpics();
         assertThat(epics).isEmpty();
+    }
+
+    @Test
+    void testFailingFetchingEpics() {
+        // given
+        when(webClient.fetchEpics()).thenThrow(IssueFetchingException.class);
+        // when
+        assertThatThrownBy(() -> service.getEpics()).hasMessage("No issues have been fetched.");
+        // then
+        verify(webClient).fetchEpics();
     }
 }

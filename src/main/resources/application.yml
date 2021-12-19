@@ -18,4 +18,3 @@ spring:
     application:
         ui:
             title: Ronja CRM progress
-            version: 1.0.0

@@ -9,17 +9,9 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class IssueTrackingService {
+public record IssueTrackingService(IssueWebClient issueWebClient, WorkflowData workflowData) {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IssueTrackingService.class);
-
-    private final IssueWebClient issueWebClient;
-    private final WorkflowData workflowData;
-
-    public IssueTrackingService(IssueWebClient issueWebClient, WorkflowData workflowData) {
-        this.issueWebClient = Objects.requireNonNull(issueWebClient);
-        this.workflowData = Objects.requireNonNull(workflowData);
-    }
 
     public List<Epic> getEpics() {
         try {

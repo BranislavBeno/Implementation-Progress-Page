@@ -16,7 +16,7 @@ public class ProjectApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectApplication.class);
 
-    public ProjectApplication(@Autowired WebPageProvider pageProvider) {
+    ProjectApplication(@Autowired WebPageProvider pageProvider) {
         try {
             Path destination = Paths.get("public/index.html");
             pageProvider.provideWebPage(destination);

@@ -1,6 +1,6 @@
 # Implementation progress pages
 
-[![Build Status](https://app.travis-ci.com/BranislavBeno/Implementation-Progress-Page.svg?branch=main)](https://app.travis-ci.com/BranislavBeno/Implementation-Progress-Page)
+[![Build Status](https://github.com/BranislavBeno/Implementation-Progress-Page/actions/workflows/gradle.yml/badge.svg)](https://github.com/BranislavBeno/Implementation-Progress-Page/actions)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=coverage)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)  

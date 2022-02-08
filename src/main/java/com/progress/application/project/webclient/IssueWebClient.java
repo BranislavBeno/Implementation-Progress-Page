@@ -26,9 +26,11 @@ public class IssueWebClient {
     }
 
     public Epic[] fetchEpics() {
+        String uri = accessData.epicsUrl().replace("{groupId}", accessData.groupId());
+
         return webClient
                 .get()
-                .uri(accessData.epicsUrl())
+                .uri(uri)
                 .retrieve()
                 .bodyToMono(Epic[].class)
                 .block();
@@ -39,7 +41,7 @@ public class IssueWebClient {
                 .get()
                 .uri(uriBuilder -> uriBuilder
                         .path(accessData.issuesUrl())
-                        .build(epicId))
+                        .build(accessData.projectId(), epicId))
                 .retrieve()
                 .bodyToMono(Issue[].class)
                 .block();

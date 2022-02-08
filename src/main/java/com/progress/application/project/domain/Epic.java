@@ -7,6 +7,8 @@ import java.util.List;
 public class Epic {
 
     private int iid;
+    @JsonProperty(value = "project_id")
+    private int projectId;
     private String title;
     private String state;
     private List<Issue> issues;
@@ -19,6 +21,14 @@ public class Epic {
 
     public void setIid(int iid) {
         this.iid = iid;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     public String getTitle() {

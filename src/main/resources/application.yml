@@ -1,20 +1,22 @@
 issue:
-    tracker:
-        uri: https://gitlab.com
-        access-token: FNtD8wyJg_8YhbSUkRsf
-        epics-url: /api/v4/groups/13289074/issues?labels=Epic&state=opened
-        issues-url: /api/v4/projects/31643739/issues/{epicId}/links
-    workflow:
-        prefix: "workflow::"
-        types:
-            - Hot-Fix
-            - CR
-            - Defect
-            - Feature
+  tracker:
+    uri: https://gitlab.com
+    group-id: 13289074
+    project-id: 31643739
+    access-token: FNtD8wyJg_8YhbSUkRsf
+    epics-url: /api/v4/groups/{groupId}/issues?labels=Epic&state=opened
+    issues-url: /api/v4/projects/{projectId}/issues/{epicId}/links
+  workflow:
+    prefix: "workflow::"
+    types:
+      - Hot-Fix
+      - CR
+      - Defect
+      - Feature
 
 spring:
-    main:
-        web-application-type: none
-    application:
-        ui:
-            title: Ronja CRM progress
+  main:
+    web-application-type: none
+  application:
+    ui:
+      title: Ronja CRM progress

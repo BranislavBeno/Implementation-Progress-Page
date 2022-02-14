@@ -25,6 +25,7 @@ repositories {
     mavenCentral()
 }
 
+var bouncyCastleVersion = "1.70"
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.j2html:j2html:1.5.0'
@@ -33,7 +34,9 @@ dependencies {
     testImplementation "org.testcontainers:testcontainers"
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:mockserver"
-    testImplementation "org.mock-server:mockserver-client-java:5.11.2"
+    testImplementation "org.mock-server:mockserver-client-java:5.12.0"
+    testImplementation "org.bouncycastle:bcprov-jdk15on:${bouncyCastleVersion}"
+    testImplementation "org.bouncycastle:bcpkix-jdk15on:${bouncyCastleVersion}"
 }
 
 dependencyManagement {

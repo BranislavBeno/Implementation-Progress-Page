@@ -41,7 +41,7 @@ class IssueWebClientTest {
 
     static {
         MOCK_SERVER.withReuse(true).start();
-        BASE_URL = "http://%s:%s".formatted(MOCK_SERVER.getContainerIpAddress(), MOCK_SERVER.getServerPort());
+        BASE_URL = "http://%s:%s".formatted(MOCK_SERVER.getHost(), MOCK_SERVER.getServerPort());
     }
 
     @DynamicPropertySource
@@ -103,7 +103,7 @@ class IssueWebClientTest {
     }
 
     private MockServerClient provideMockServer() {
-        return new MockServerClient(MOCK_SERVER.getContainerIpAddress(), MOCK_SERVER.getServerPort());
+        return new MockServerClient(MOCK_SERVER.getHost(), MOCK_SERVER.getServerPort());
     }
 
     private String readResourceFile(String filePath) throws IOException {

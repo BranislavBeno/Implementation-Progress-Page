@@ -55,7 +55,8 @@ class IssueWebClientTest {
     @Test
     void testEpicsFetching() throws IOException {
         String json = readResourceFile("/epics.json");
-        mockResponse("/epics", json);
+        MockServerClient mockServerClient = provideMockServer();
+        mockResponse("/epics", json, mockServerClient);
         Epic[] epics = webClient.fetchEpics();
 
         assertThat(epics).hasSize(7);
@@ -72,7 +73,8 @@ class IssueWebClientTest {
     @Test
     void testIssuesFetching() throws IOException {
         String json = readResourceFile("/issues.json");
-        mockResponse("/issues/2", json);
+        MockServerClient mockServerClient = provideMockServer();
+        mockResponse("/issues/2", json, mockServerClient);
         Issue[] issues = webClient.fetchIssues(2);
 
         assertThat(issues).hasSize(3);
@@ -89,8 +91,7 @@ class IssueWebClientTest {
         assertThat(issue.printLabels()).hasSize(20);
     }
 
-    private void mockResponse(String url, String json) {
-        MockServerClient mockServerClient = provideMockServer();
+    private void mockResponse(String url, String json, MockServerClient mockServerClient) {
         mockServerClient
                 .when(HttpRequest.request()
                         .withMethod("GET")

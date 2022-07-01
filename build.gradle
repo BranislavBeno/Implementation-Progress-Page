@@ -28,7 +28,7 @@ repositories {
 var bouncyCastleVersion = "1.70"
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-webflux"
-    implementation "com.j2html:j2html:1.5.0"
+    implementation "com.j2html:j2html:1.6.0"
     implementation "commons-io:commons-io:2.11.0"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.testcontainers:testcontainers"

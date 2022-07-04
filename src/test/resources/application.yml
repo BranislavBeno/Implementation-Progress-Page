@@ -1,16 +1,28 @@
 issue:
-    tracker:
-        access-token: duke
-        epics-url: /epics
-        issues-url: /issues/2
-    workflow:
-        prefix: "workflow::"
-        types:
-            - Hot-Fix
-            - CR
-            - Defect
-            - Feature
+  tracker:
+    access-token: duke
+    epics-url: /epics
+    issues-url: /issues/2
+  workflow:
+    prefix: "workflow::"
+    types:
+      - Hot-Fix
+      - CR
+      - Defect
+      - Feature
 
 spring:
-    main:
-        web-application-type: none
+  main:
+    web-application-type: none
+  test:
+    context:
+      cache:
+        maxSize: 42
+
+logging:
+  level:
+    org:
+      springframework:
+        test:
+          context:
+            cache: DEBUG

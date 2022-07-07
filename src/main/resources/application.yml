@@ -4,7 +4,7 @@ issue:
     group-id: 13289074
     project-id: 31643739
     access-token: FNtD8wyJg_8YhbSUkRsf
-    epics-url: /api/v4/groups/{groupId}/issues?labels=Epic&state=opened
+    epics-url: /api/v4/groups/{groupId}/issues?scope=all&per_page=50000&state=opened&labels=Epic
     issues-url: /api/v4/projects/{projectId}/issues/{epicId}/links
   workflow:
     prefix: "workflow::"

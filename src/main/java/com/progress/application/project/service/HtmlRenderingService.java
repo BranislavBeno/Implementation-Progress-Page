@@ -11,7 +11,6 @@ import j2html.tags.specialized.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,45 +31,60 @@ public class HtmlRenderingService {
 
     private List<String> provideReleases(List<Epic> epics) {
         return epics.stream()
-            .flatMap(e -> e.getIssues().stream())
-            .map(Issue::getMilestone)
-            .filter(Objects::nonNull)
-            .map(Milestone::getTitle)
-            .distinct()
-            .sorted(Comparator.reverseOrder())
-            .toList();
+                .flatMap(e -> e.getIssues().stream())
+                .map(Issue::getMilestone)
+                .filter(Objects::nonNull)
+                .map(Milestone::getTitle)
+                .distinct()
+                .sorted(this::compareReleases)
+                .toList();
+    }
+
+    private int compareReleases(String c1, String c2) {
+        try {
+            Integer v1 = parseRelease(c1);
+            Integer v2 = parseRelease(c2);
+            return v2.compareTo(v1);
+        } catch (Exception e) {
+            return c2.compareTo(c1);
+        }
+    }
+
+    private int parseRelease(String c) throws NumberFormatException {
+        String e = c.replaceAll("\\D", "");
+        return Integer.parseInt(e);
     }
 
     private String render(Tag<?>... tags) {
         return document(
-            html(
-                head(
-                    title(title),
-                    link()
-                        .withRel(STYLESHEET_ATTR)
-                        .withHref("https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"),
-                    link()
-                        .withRel(STYLESHEET_ATTR)
-                        .withHref("css/mdb.dark.min.css"),
-                    link()
-                        .withRel(STYLESHEET_ATTR)
-                        .withHref("css/style.css")
-                ),
-                body(
-                    div()
-                        .withClass("wrapper")
-                        .with(tags),
-                    script()
-                        .withSrc("https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"),
-                    script()
-                        .withSrc("https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"),
-                    script(new UnescapedText("""
-                        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-                        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                          return new bootstrap.Tooltip(tooltipTriggerEl)
-                        })"""))
+                html(
+                        head(
+                                title(title),
+                                link()
+                                        .withRel(STYLESHEET_ATTR)
+                                        .withHref("https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"),
+                                link()
+                                        .withRel(STYLESHEET_ATTR)
+                                        .withHref("css/mdb.dark.min.css"),
+                                link()
+                                        .withRel(STYLESHEET_ATTR)
+                                        .withHref("css/style.css")
+                        ),
+                        body(
+                                div()
+                                        .withClass("wrapper")
+                                        .with(tags),
+                                script()
+                                        .withSrc("https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"),
+                                script()
+                                        .withSrc("https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"),
+                                script(new UnescapedText("""
+                                        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                                        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                                          return new bootstrap.Tooltip(tooltipTriggerEl)
+                                        })"""))
+                        )
                 )
-            )
         );
     }
 
@@ -97,35 +111,35 @@ public class HtmlRenderingService {
     private DivTag provideTable() {
         List<Epic> epics = issueTrackingService.getEpics();
         return div()
-            .withClasses("container", "table-responsive-sm")
-            .with(table()
-                .withId("epicsTable")
-                .withClasses("table", "table-sm", "table-bordered", "table-striped", "table-hover",
-                    "align-middle")
-                .with(provideTableHead(epics), provideTableBody(epics)));
+                .withClasses("container", "table-responsive-sm")
+                .with(table()
+                        .withId("epicsTable")
+                        .withClasses("table", "table-sm", "table-bordered", "table-striped", "table-hover",
+                                "align-middle")
+                        .with(provideTableHead(epics), provideTableBody(epics)));
     }
 
     private TheadTag provideTableHead(List<Epic> epics) {
         List<String> releases = provideReleases(epics);
         return thead()
-            .withClasses("bg-dark", "align-middle")
-            .with(tr()
-                    .with(th("Epic")
-                            .attr(COL_SPAN_ATTR, 2),
-                        th("Issue")
-                            .attr(COL_SPAN_ATTR, 4),
-                        th("Release")
-                            .attr(COL_SPAN_ATTR, releases.size())
-                    ),
-                tr()
-                    .with(th("#"),
-                        th("Description"),
-                        th("#"),
-                        th("Description"),
-                        th("Type"),
-                        th("Status"))
-                    .with(provideHeadRows(releases))
-            );
+                .withClasses("bg-dark", "align-middle")
+                .with(tr()
+                                .with(th("Epic")
+                                                .attr(COL_SPAN_ATTR, 2),
+                                        th("Issue")
+                                                .attr(COL_SPAN_ATTR, 4),
+                                        th("Release")
+                                                .attr(COL_SPAN_ATTR, releases.size())
+                                ),
+                        tr()
+                                .with(th("#"),
+                                        th("Description"),
+                                        th("#"),
+                                        th("Description"),
+                                        th("Type"),
+                                        th("Status"))
+                                .with(provideHeadRows(releases))
+                );
     }
 
     private List<DomContent> provideHeadRows(List<String> releases) {
@@ -153,22 +167,22 @@ public class HtmlRenderingService {
         List<Issue> issues = epic.getIssues();
         if (issues.isEmpty()) {
             return List.of(tr()
-                .with(td(a(String.valueOf(epic.getIid()))
-                        .withHref(epic.getWebUrl())),
-                    td(epic.getTitle()))
-                .with(provideEmptyRow(releases.size())));
+                    .with(td(a(String.valueOf(epic.getIid()))
+                                    .withHref(epic.getWebUrl())),
+                            td(epic.getTitle()))
+                    .with(provideEmptyRow(releases.size())));
         } else {
             List<TrTag> rows = new ArrayList<>();
             for (Issue issue : issues) {
                 TrTag tag;
                 if (issues.indexOf(issue) == 0) {
                     tag = tr()
-                        .with(td(a(String.valueOf(epic.getIid()))
-                                .withHref(epic.getWebUrl()))
-                                .attr("rowspan", issues.size()),
-                            td(epic.getTitle())
-                                .attr("rowspan", issues.size()))
-                        .with(provideFilledRow(issue, releases));
+                            .with(td(a(String.valueOf(epic.getIid()))
+                                            .withHref(epic.getWebUrl()))
+                                            .attr("rowspan", issues.size()),
+                                    td(epic.getTitle())
+                                            .attr("rowspan", issues.size()))
+                            .with(provideFilledRow(issue, releases));
                 } else {
                     tag = tr().with(provideFilledRow(issue, releases));
                 }
@@ -189,7 +203,7 @@ public class HtmlRenderingService {
     private List<DomContent> provideFilledRow(Issue issue, List<String> releases) {
         List<DomContent> cells = new ArrayList<>();
         cells.add(td().with(
-            a(issue.getIid()).withHref(issue.getWebUrl())));
+                a(issue.getIid()).withHref(issue.getWebUrl())));
         cells.add(td(issue.getTitle()).withClass("text-nowrap"));
         cells.add(td(issue.printLabels()).withClass("text-nowrap"));
         String state = issue.getState();
@@ -204,11 +218,11 @@ public class HtmlRenderingService {
         };
         for (String rel : releases) {
             cells.add(rel.equals(release) ?
-                td().withClass(bgMilestone)
-                    .attr("data-bs-toggle", "tooltip")
-                    .attr("data-bs-placement", "right")
-                    .attr("title", workFlow)
-                : td());
+                    td().withClass(bgMilestone)
+                            .attr("data-bs-toggle", "tooltip")
+                            .attr("data-bs-placement", "right")
+                            .attr("title", workFlow)
+                    : td());
         }
         return cells;
     }

@@ -41,6 +41,9 @@ public class IssueWebClient {
                 .get()
                 .uri(uriBuilder -> uriBuilder
                         .path(accessData.issuesUrl())
+                        .queryParam("scope", "all")
+                        .queryParam("per_page", "50000")
+                        .queryParam("state", "all")
                         .build(accessData.projectId(), epicId))
                 .retrieve()
                 .bodyToMono(Issue[].class)

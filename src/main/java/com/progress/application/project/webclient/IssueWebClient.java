@@ -26,24 +26,32 @@ public class IssueWebClient {
     }
 
     public Epic[] fetchEpics() {
-        String uri = accessData.epicsUrl().replace("{groupId}", accessData.groupId());
+        EpicData epicData = accessData.epicData();
 
         return webClient
                 .get()
-                .uri(uri)
+                .uri(uriBuilder -> uriBuilder
+                        .path(epicData.url())
+                        .queryParam("labels", epicData.labels())
+                        .queryParam("per_page", epicData.perPageLimit())
+                        .queryParam("scope", epicData.scope())
+                        .queryParam("state", epicData.state())
+                        .build(accessData.groupId()))
                 .retrieve()
                 .bodyToMono(Epic[].class)
                 .block();
     }
 
     public Issue[] fetchIssues(int epicId) {
+        IssueData issueData = accessData.issueData();
+
         return webClient
                 .get()
                 .uri(uriBuilder -> uriBuilder
-                        .path(accessData.issuesUrl())
-                        .queryParam("scope", "all")
-                        .queryParam("per_page", "50000")
-                        .queryParam("state", "all")
+                        .path(issueData.url())
+                        .queryParam("per_page", issueData.perPageLimit())
+                        .queryParam("scope", issueData.scope())
+                        .queryParam("state", issueData.state())
                         .build(accessData.projectId(), epicId))
                 .retrieve()
                 .bodyToMono(Issue[].class)

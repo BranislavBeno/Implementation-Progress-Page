@@ -47,6 +47,15 @@ class IssueWebClientTest {
     @DynamicPropertySource
     static void properties(DynamicPropertyRegistry registry) {
         registry.add("issue.tracker.uri", () -> BASE_URL);
+        registry.add("issue.tracker.epics.url", () -> "/epics");
+        registry.add("issue.tracker.epics.labels", () -> "Epic");
+        registry.add("issue.tracker.epics.per-page-limit", () -> "100");
+        registry.add("issue.tracker.epics.scope", () -> "all");
+        registry.add("issue.tracker.epics.state", () -> "all");
+        registry.add("issue.tracker.issues.url", () -> "issues/2");
+        registry.add("issue.tracker.issues.per-page-limit", () -> "100");
+        registry.add("issue.tracker.issues.scope", () -> "all");
+        registry.add("issue.tracker.issues.state", () -> "all");
     }
 
     @Autowired

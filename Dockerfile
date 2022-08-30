@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jdk-alpine AS build
+FROM eclipse-temurin:18-jdk-alpine AS build
 RUN mkdir /project
 COPY . /project
 WORKDIR /project
@@ -9,7 +9,7 @@ RUN cd build/libs/ && cp impl-progress.jar /project/
 # extrect layered jar file
 RUN java -Djarmode=layertools -jar impl-progress.jar extract
 
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:18-jre-alpine
 RUN mkdir /app
 # set work directory
 WORKDIR /app

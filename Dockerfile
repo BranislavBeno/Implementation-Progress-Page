@@ -1,15 +1,15 @@
-FROM eclipse-temurin:18-jdk-alpine AS build
+FROM gradle:7.5.1-jdk18-jammy AS build
 RUN mkdir /project
 COPY . /project
 WORKDIR /project
 # create fat jar
-RUN chmod +x gradlew && ./gradlew build -x test
+RUN gradle build -x test
 # move the jar file
 RUN cd build/libs/ && cp impl-progress.jar /project/
 # extrect layered jar file
 RUN java -Djarmode=layertools -jar impl-progress.jar extract
 
-FROM eclipse-temurin:18-jre-alpine
+FROM eclipse-temurin:18-jre-jammy
 RUN mkdir /app
 # set work directory
 WORKDIR /app

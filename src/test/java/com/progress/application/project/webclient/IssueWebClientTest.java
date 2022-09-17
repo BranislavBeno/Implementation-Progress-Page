@@ -36,7 +36,8 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Import(ProjectTestConfiguration.class)
 class IssueWebClientTest {
 
-    private static final MockServerContainer MOCK_SERVER = new MockServerContainer(DockerImageName.parse("mockserver/mockserver"));
+    private static final MockServerContainer MOCK_SERVER = new MockServerContainer(
+            DockerImageName.parse("mockserver/mockserver:5.14.0"));
     private static final String BASE_URL;
 
     static {

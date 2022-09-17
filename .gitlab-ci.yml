@@ -6,7 +6,8 @@ before_script:
 unit_test:
   stage: test
   script:
-    - curl -L -o agent https://app.testcontainers.cloud/download/testcontainers-cloud-agent_linux_x86-64
+    - suffix=$([[ $(uname -m) == "aarch64" ]] && echo "arm64" || echo "x86-64")
+    - curl -L -o agent https://app.testcontainers.cloud/download/testcontainers-cloud-agent_linux_$suffix
     - chmod +x agent
     - ./agent &
     - ./agent wait

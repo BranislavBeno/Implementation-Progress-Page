@@ -24,8 +24,7 @@ pages:
   artifacts:
     paths:
       - public
-  only:
-    refs:
-      - main
+  rules:
+    - if: ($NO_PAGES == null) && ($CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH)
   tags:
     - docker

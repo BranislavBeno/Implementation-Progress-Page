@@ -1,9 +1,6 @@
 image: eclipse-temurin:18-jdk
 
-before_script:
-  - chmod +x gradlew
-
-unit_test:
+unit-test:
   stage: test
   script:
     - suffix=$([[ $(uname -m) == "aarch64" ]] && echo "arm64" || echo "x86-64")
@@ -11,6 +8,7 @@ unit_test:
     - chmod +x agent
     - ./agent &
     - ./agent wait
+    - chmod +x gradlew
     - ./gradlew jacocoTestReport
     - cat build/reports/jacoco/test/html/index.html
   tags:
@@ -18,14 +16,16 @@ unit_test:
 
 pages:
   stage: deploy
+  image: beo1975/implementation-progress:1.4.0
   script:
-    - ./gradlew bootRun
+    - cp -r /app/* ./
+    - cp ci/application.yml BOOT-INF/classes/
+    - dumb-init java org.springframework.boot.loader.JarLauncher
   artifacts:
     paths:
       - public
-  needs:
-    - job: unit_test
-  rules:
-    - if: '$NO_PAGES == null'
+  only:
+    refs:
+      - main
   tags:
     - docker

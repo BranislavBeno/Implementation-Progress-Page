@@ -1,0 +1,33 @@
+issue:
+  tracker:
+    uri: https://gitlab.com
+    group-id: 13289074
+    project-id: 31643739
+    access-token: Provide token as CI/CD related environment variable named 'ISSUE_TRACKER_ACCESS_TOKEN'
+    epics:
+      url: /api/v4/groups/{groupId}/issues
+      labels: Epic
+      per-page-limit: 50000
+      scope: all
+      state: all
+    issues:
+      url: /api/v4/projects/{projectId}/issues/{epicId}/links
+      per-page-limit: 50000
+      scope: all
+      state: all
+  workflow:
+    prefix: "workflow::"
+    types:
+      - Hot-Fix
+      - CR
+      - Defect
+      - Feature
+      - Know How
+      - Documentation
+
+spring:
+  main:
+    web-application-type: none
+  application:
+    ui:
+      title: Ronja CRM progress

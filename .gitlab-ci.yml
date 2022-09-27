@@ -1,4 +1,4 @@
-image: eclipse-temurin:18-jdk
+image: eclipse-temurin:19-jdk
 
 unit-test:
   stage: test

@@ -1,6 +1,7 @@
 # Implementation progress pages
 
-[![Build Status](https://github.com/BranislavBeno/Implementation-Progress-Page/actions/workflows/gradle.yml/badge.svg)](https://github.com/BranislavBeno/Implementation-Progress-Page/actions)
+[![Application Tests](https://github.com/BranislavBeno/Implementation-Progress-Page/actions/workflows/tests.yml/badge.svg)](https://github.com/BranislavBeno/Implementation-Progress-Page/actions/workflows/tests.yml)
+[![Docker Image Deploy](https://github.com/BranislavBeno/Implementation-Progress-Page/actions/workflows/deploy.yml/badge.svg)](https://github.com/BranislavBeno/Implementation-Progress-Page/actions/workflows/deploy.yml)  
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=coverage)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)  
@@ -13,3 +14,4 @@
 Simple backend application written in Spring Boot to gather GitLab issues status and release planning on particular project.
 
 Results are presented as a [static web page](https://dashboard-tools.gitlab.io/Implementation-Progress-Page) on GitLab pages.
+    

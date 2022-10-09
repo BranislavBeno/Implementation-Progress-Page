@@ -9,9 +9,9 @@ RUN cd build/libs/ && cp impl-progress.jar /project/
 # extrect layered jar file
 RUN java -Djarmode=layertools -jar impl-progress.jar extract
 
-FROM eclipse-temurin:18-jre-jammy
+FROM azul/zulu-openjdk-alpine:18-jre
 # install dumb-init
-RUN apt-get update && apt-get install -y dumb-init
+RUN apk add --no-cache dumb-init=1.2.5-r1
 RUN mkdir /app
 # set work directory
 WORKDIR /app

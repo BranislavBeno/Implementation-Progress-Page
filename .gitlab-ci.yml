@@ -1,5 +1,15 @@
 image: eclipse-temurin:18-jdk
 
+git-leaks:
+  stage: .pre
+  image:
+    name: "zricethezav/gitleaks:latest"
+    entrypoint: [""]
+  script:
+    - gitleaks detect --verbose --redact --no-git --source="$CI_PROJECT_DIR"
+  tags:
+    - docker
+
 unit-test:
   stage: test
   script:

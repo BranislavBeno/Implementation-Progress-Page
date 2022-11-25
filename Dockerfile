@@ -1,11 +1,9 @@
-FROM gradle:7.5.1-jdk18-jammy AS build
+FROM azul/zulu-openjdk-alpine:19 AS build
 RUN mkdir /project
 COPY . /project
 WORKDIR /project
 # create fat jar
-RUN gradle build -x test
-# move the jar file
-RUN cd build/libs/ && cp impl-progress.jar /project/
+RUN chmod +x gradlew && ./gradlew build -x test && cp build/libs/impl-progress.jar ./
 # extrect layered jar file
 RUN java -Djarmode=layertools -jar impl-progress.jar extract
 

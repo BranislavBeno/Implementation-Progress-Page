@@ -6,9 +6,9 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=coverage)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)  
 [![](https://img.shields.io/badge/Java-18-blue)](/build.gradle)
-[![](https://img.shields.io/badge/Spring%20Boot-2.7.5-blue)](/build.gradle)
+[![](https://img.shields.io/badge/Spring%20Boot-3.0.0-blue)](/build.gradle)
 [![](https://img.shields.io/badge/Testcontainers-1.17.6-blue)](/build.gradle)
-[![](https://img.shields.io/badge/Gradle-7.5.1-blue)](/gradle/wrapper/gradle-wrapper.properties)
+[![](https://img.shields.io/badge/Gradle-7.6-blue)](/gradle/wrapper/gradle-wrapper.properties)
 [![](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
 
 Simple backend application written in Spring Boot to gather GitLab issues status and release planning on particular project.

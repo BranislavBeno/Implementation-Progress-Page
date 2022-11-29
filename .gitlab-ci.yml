@@ -17,12 +17,7 @@ test-security:
     entrypoint: [""]
   script:
     - trivy fs --no-progress --ignore-unfixed --exit-code 0 $CI_PROJECT_DIR
-    - trivy fs --no-progress --ignore-unfixed --format template --template @/contrib/junit.tpl -o junit-trivy.xml --exit-code 1 $CI_PROJECT_DIR
   allow_failure: true
-  artifacts:
-    when: always
-    reports:
-      junit: junit-trivy.xml
   tags:
     - docker
 
@@ -40,11 +35,6 @@ test-code:
     - ./gradlew jacocoTestReport
     - cat build/reports/jacoco/test/html/index.html
   coverage: "/Total.*?([0-9]{1,3})%/"
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - build/test-results/test/**/TEST-*.xml
   tags:
     - docker
 

@@ -1,16 +1,32 @@
 image: azul/zulu-openjdk:19
 
-git-leaks:
+scan-code:
   stage: .pre
   image:
-    name: "zricethezav/gitleaks:latest"
-    entrypoint: [ "" ]
+    name: "zricethezav/gitleaks:v8.15.1"
+    entrypoint: [""]
   script:
     - gitleaks detect --verbose --redact --no-git --source="$CI_PROJECT_DIR"
   tags:
     - docker
 
-unit-test:
+test-security:
+  stage: test
+  image:
+    name: "aquasec/trivy:0.35.0"
+    entrypoint: [""]
+  script:
+    - trivy fs --no-progress --ignore-unfixed --exit-code 0 $CI_PROJECT_DIR
+    - trivy fs --no-progress --ignore-unfixed --format template --template @/contrib/junit.tpl -o junit-trivy.xml --exit-code 1 $CI_PROJECT_DIR
+  allow_failure: true
+  artifacts:
+    when: always
+    reports:
+      junit: junit-trivy.xml
+  tags:
+    - docker
+
+test-code:
   stage: test
   script:
     - apt-get update && apt-get install -y curl
@@ -23,6 +39,12 @@ unit-test:
     - chmod +x gradlew
     - ./gradlew jacocoTestReport
     - cat build/reports/jacoco/test/html/index.html
+  coverage: "/Total.*?([0-9]{1,3})%/"
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - build/test-results/test/**/TEST-*.xml
   tags:
     - docker
 

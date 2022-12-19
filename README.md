@@ -11,7 +11,7 @@
 
 ## Backend application for static web page creation
 This simple backend application creates static web page with fetched status of particular project related GitLab issues.  
-Example results are available on GitLab pages under: [static web page](https://dashboard-tools.gitlab.io/Implementation-Progress-Page).  
+[Example results](https://dashboard-tools.gitlab.io/Implementation-Progress-Page) are available on GitLab pages.  
 
 Application works not as a web server, but simply fetches necessary data, creates web page and afterwards ends.  
 In case you need to recreate the web page, you must run the application again.

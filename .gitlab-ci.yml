@@ -59,7 +59,6 @@ scan-image:
     entrypoint: [""]
   script:
     - trivy i --no-progress --ignore-unfixed --clear-cache --exit-code 1 $CONTAINER_IMAGE
-  allow_failure: true
   rules:
     - if: ($CI_PIPELINE_SOURCE == "schedule") && ($CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH)
   tags:

@@ -33,7 +33,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-webflux"
     implementation "com.j2html:j2html:1.6.0"
     implementation "commons-io:commons-io:2.11.0"
-    implementation "org.yaml:snakeyaml:1.33"
+    implementation "org.yaml:snakeyaml:2.0"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.testcontainers:testcontainers"
     testImplementation "org.testcontainers:junit-jupiter"

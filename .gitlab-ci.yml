@@ -1,7 +1,7 @@
 image: azul/zulu-openjdk:20
 
 variables:
-  CONTAINER_IMAGE: beo1975/implementation-progress:1.4.0
+  CONTAINER_IMAGE: beo1975/implementation-progress:latest
 
 stages:
   - test
@@ -66,7 +66,7 @@ scan-image:
 
 pages:
   stage: deploy
-  image: beo1975/implementation-progress:1.4.0
+  image: beo1975/implementation-progress:latest
   script:
     - cp -r /app/* ./
     - cp ci/application.yml BOOT-INF/classes/

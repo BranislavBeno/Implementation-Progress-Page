@@ -82,5 +82,6 @@ jacocoTestReport {
 sonarqube {
     properties {
         property "sonar.projectKey", "BranislavBeno_ImplementationProgressPage"
+        property "sonar.projectName", "implementation-progress-page"
     }
 }

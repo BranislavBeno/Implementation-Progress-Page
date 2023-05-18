@@ -4,6 +4,9 @@ on:
   workflow_run:
     workflows: [ Application Tests ]
     types: [ completed ]
+    branches:
+      - main
+      - feat/java-20
 
 jobs:
   changes:

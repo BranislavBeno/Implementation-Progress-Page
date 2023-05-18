@@ -1,15 +1,15 @@
-FROM gradle:8.0.2-jdk19-jammy AS build
+FROM eclipse-temurin:20-jdk-jammy AS build
 RUN mkdir /project
 COPY . /project
 WORKDIR /project
 # create fat jar
-RUN gradle build -x test
+RUN chmod +x gradlew && ./gradlew build -x test
 # move the jar file
 RUN cd build/libs/ && cp impl-progress.jar /project/
 # extrect layered jar file
 RUN java -Djarmode=layertools -jar impl-progress.jar extract
 
-FROM azul/zulu-openjdk-alpine:20-jre
+FROM eclipse-temurin:20-jre-alpine
 # install dumb-init
 RUN apk add --no-cache dumb-init=1.2.5-r1
 RUN mkdir /app

@@ -4,23 +4,23 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=coverage)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)  
 [![](https://img.shields.io/badge/Java-20-blue)](/build.gradle)
-[![](https://img.shields.io/badge/Spring%20Boot-3.1.4-blue)](/build.gradle)
+[![](https://img.shields.io/badge/Spring%20Boot-3.1.5-blue)](/build.gradle)
 [![](https://img.shields.io/badge/Testcontainers-1.19.1-blue)](/build.gradle)
 [![](https://img.shields.io/badge/Gradle-8.4-blue)](/gradle/wrapper/gradle-wrapper.properties)
 [![](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
 
 ## Backend application for static web page creation
-This simple backend application creates static web page with fetched status of particular project related GitLab issues.  
+This backend application creates a static web page with fetched status of a particular project related to GitLab issues.  
 [Example results](https://dashboard-tools.gitlab.io/Implementation-Progress-Page) are available on GitLab pages.  
 
-Application works not as a web server, but simply fetches necessary data, creates web page and afterwards ends.  
+The Application works not as a web server, but simply fetches necessary data, creates a web page and afterward ends.  
 In case you need to recreate the web page, you must run the application again.
 
 ### Usage
 This application relies on Gitlab issues and is intended as an extension for project workflow.  
-> Application expects only running instance of Gitlab from which the issues will be imported. No other services (e.g. databases, message brokers,...) are required.
+> The Application expects only to run instance of Gitlab from which the issues will be imported. No other services (e.g., databases, message brokers, ...) are required.
 
-Result of application run can be directly published as a [Gitlab Pages](https://docs.gitlab.com/ee/user/project/pages/),  
+Result of application run can be directly published as a [Gitlab Pages;](https://docs.gitlab.com/ee/user/project/pages/)
 hence the preferred way of usage is to define docker image `beo1975/implementation-progress:1.4.0` as a basic image for Gitlab-CI:
 ```yaml
 image: beo1975/implementation-progress:1.4.0
@@ -75,8 +75,8 @@ spring:
             title: <Project name>
 ```
 
-- Application expects Gitlab issues labeled as `Epic`. Those represent features in developed project. Tasks (again in form of Gitlab issues) related to particular feature are [linked](https://docs.gitlab.com/ee/user/project/issues/related_issues.html) to respective epic. Only issues with label from `issue.workflow.types` list are processed for result.
-- It's possible to adapt configuration to project specific workflow, driven by usage of [Gitlab labels](https://docs.gitlab.com/ee/user/project/labels.html).
+- Application expects Gitlab issues labeled as `Epic`. Those represent features in a developed project. Tasks (again in the form of Gitlab issues) related to particular feature are [linked](https://docs.gitlab.com/ee/user/project/issues/related_issues.html) to respective epic. Only issues with label from `issue.workflow.types` list are processed for a result.
+- It's possible to adapt configuration to project-specific workflow, driven by usage of [Gitlab labels](https://docs.gitlab.com/ee/user/project/labels.html).
 - It's also possible to configure [pagination, scope and state of issues](https://docs.gitlab.com/ee/api/issues.html) for more precisely focused results.
 
 > For access token obtaining, see: [Project access tokens](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html).  

@@ -7,7 +7,7 @@ RUN chmod +x gradlew && ./gradlew build -x test && cp build/libs/impl-progress.j
 # extrect layered jar file
 RUN java -Djarmode=layertools -jar impl-progress.jar extract
 
-FROM azul/zulu-openjdk-alpine:20.0.2-20.32.11-jre-headless-x86
+FROM azul/zulu-openjdk-alpine:20.0.2-jre-headless
 # install dumb-init
 RUN apk add --no-cache dumb-init=1.2.5-r2
 RUN mkdir /app

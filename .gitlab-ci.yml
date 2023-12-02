@@ -1,4 +1,4 @@
-image: eclipse-temurin:20-jdk-jammy
+image: eclipse-temurin:21.0.1_12-jdk-jammy
 
 variables:
   CONTAINER_IMAGE: beo1975/implementation-progress:latest
@@ -70,7 +70,7 @@ pages:
   script:
     - cp -r /app/* ./
     - cp ci/application.yml BOOT-INF/classes/
-    - dumb-init java org.springframework.boot.loader.JarLauncher
+    - dumb-init java org.springframework.boot.loader.launch.JarLauncher
   artifacts:
     paths:
       - public

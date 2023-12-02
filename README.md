@@ -6,7 +6,7 @@
 [![](https://img.shields.io/badge/Java-20-blue)](/build.gradle)
 [![](https://img.shields.io/badge/Spring%20Boot-3.2.0-blue)](/build.gradle)
 [![](https://img.shields.io/badge/Testcontainers-1.19.3-blue)](/build.gradle)
-[![](https://img.shields.io/badge/Gradle-8.4-blue)](/gradle/wrapper/gradle-wrapper.properties)
+[![](https://img.shields.io/badge/Gradle-8.5-blue)](/gradle/wrapper/gradle-wrapper.properties)
 [![](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
 
 ## Backend application for static web page creation
@@ -30,7 +30,7 @@ pages:
   script:
     - cp -r /app/* ./
     - cp ci/application.yml BOOT-INF/classes/
-    - java org.springframework.boot.loader.JarLauncher
+    - java org.springframework.boot.loader.launch.JarLauncher
   artifacts:
     paths:
       - public

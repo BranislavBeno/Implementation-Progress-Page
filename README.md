@@ -5,7 +5,7 @@
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)  
 [![](https://img.shields.io/badge/Java-21-blue)](/build.gradle)
 [![](https://img.shields.io/badge/Spring%20Boot-3.2.2-blue)](/build.gradle)
-[![](https://img.shields.io/badge/Testcontainers-1.19.4-blue)](/build.gradle)
+[![](https://img.shields.io/badge/Testcontainers-1.19.5-blue)](/build.gradle)
 [![](https://img.shields.io/badge/Gradle-8.6-blue)](/gradle/wrapper/gradle-wrapper.properties)
 [![](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
 

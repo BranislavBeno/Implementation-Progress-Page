@@ -103,8 +103,8 @@ public class HtmlRenderingService {
     }
 
     private PTag provideFooter() {
-        return p(String.format("Last update: %s", LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))))
+        return p("Last update: %s".formatted(LocalDateTime.now()
+                        .format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))))
                 .withClasses("text-muted", "text-center");
     }
 

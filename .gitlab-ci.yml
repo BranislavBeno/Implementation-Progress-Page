@@ -18,7 +18,7 @@ scan-code:
   rules:
     - if: ($CI_PIPELINE_SOURCE != "schedule")
   tags:
-    - docker
+    - saas-linux-small-amd64
 
 scan-vulnerabilities:
   stage: .pre
@@ -31,7 +31,7 @@ scan-vulnerabilities:
   rules:
     - if: ($CI_PIPELINE_SOURCE != "schedule")
   tags:
-    - docker
+    - saas-linux-small-amd64
 
 test-code:
   stage: test
@@ -50,7 +50,7 @@ test-code:
   rules:
     - if: ($CI_PIPELINE_SOURCE != "schedule")
   tags:
-    - docker
+    - saas-linux-small-amd64
 
 scan-image:
   stage: scan
@@ -62,7 +62,7 @@ scan-image:
   rules:
     - if: ($CI_PIPELINE_SOURCE == "schedule") && ($CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH)
   tags:
-    - docker
+    - saas-linux-small-amd64
 
 pages:
   stage: deploy
@@ -77,4 +77,4 @@ pages:
   rules:
     - if: ($CI_PIPELINE_SOURCE != "schedule") && ($NO_PAGES == null) && ($CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH)
   tags:
-    - docker
+    - saas-linux-small-amd64

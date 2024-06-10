@@ -1,0 +1,9 @@
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.progress.application.project.NoStaticImport
+displayName: Remove static import
+recipeList:
+  - org.openrewrite.java.NoStaticImport:
+      methodPattern: j2html.TagCreator *(..)
+  - org.openrewrite.java.NoStaticImport:
+      methodPattern: org.mockito.Mockito *(..)

@@ -2,6 +2,7 @@ package com.progress.application.project.webclient;
 
 import com.progress.application.project.domain.Epic;
 import com.progress.application.project.domain.Issue;
+import org.assertj.core.api.WithAssertions;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.mockserver.client.MockServerClient;
@@ -27,14 +28,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-
 @Testcontainers(disabledWithoutDocker = true)
-@SpringBootTest(classes = IssueWebClient.class, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = IssueWebClient.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = IssueWebClientTest.Initializer.class)
 @Import(ProjectTestConfiguration.class)
-class IssueWebClientTest {
+class IssueWebClientTest implements WithAssertions {
 
     private static final MockServerContainer MOCK_SERVER = new MockServerContainer(
             DockerImageName.parse("mockserver/mockserver:mockserver-5.15.0"));

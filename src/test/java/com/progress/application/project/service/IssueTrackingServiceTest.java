@@ -3,6 +3,7 @@ package com.progress.application.project.service;
 import com.progress.application.project.domain.Epic;
 import com.progress.application.project.domain.Issue;
 import com.progress.application.project.webclient.IssueWebClient;
+import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,16 +11,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
-class IssueTrackingServiceTest {
+class IssueTrackingServiceTest implements WithAssertions {
 
     private IssueTrackingService service;
     @Mock
@@ -39,43 +37,43 @@ class IssueTrackingServiceTest {
     @Test
     void testFetchingMatchingEpics() {
         // given
-        when(webClient.fetchEpics()).thenReturn(new Epic[]{epic});
-        when(epic.getProjectId()).thenReturn(1);
-        when(webClient.fetchIssues(anyInt())).thenReturn(new Issue[]{issue, issue});
-        when(data.getTypes()).thenReturn(List.of("CR"));
-        when(issue.getState()).thenReturn("Open");
+        Mockito.when(webClient.fetchEpics()).thenReturn(new Epic[]{epic});
+        Mockito.when(epic.getProjectId()).thenReturn(1);
+        Mockito.when(webClient.fetchIssues(Mockito.anyInt())).thenReturn(new Issue[]{issue, issue});
+        Mockito.when(data.getTypes()).thenReturn(List.of("CR"));
+        Mockito.when(issue.getState()).thenReturn("Open");
         // when
         List<Epic> epics = service.getEpics();
         // then
-        verify(webClient).fetchEpics();
-        verify(epic).getProjectId();
-        verify(webClient).fetchIssues(anyInt());
-        verify(data).getTypes();
-        verify(issue, times(2)).getState();
+        Mockito.verify(webClient).fetchEpics();
+        Mockito.verify(epic).getProjectId();
+        Mockito.verify(webClient).fetchIssues(Mockito.anyInt());
+        Mockito.verify(data).getTypes();
+        Mockito.verify(issue, Mockito.times(2)).getState();
         assertThat(epics).hasSize(1);
     }
 
     @Test
     void testFetchingNotMatchingEpics() {
         // given
-        when(webClient.fetchEpics()).thenReturn(new Epic[]{epic});
-        when(epic.getProjectId()).thenReturn(2);
+        Mockito.when(webClient.fetchEpics()).thenReturn(new Epic[]{epic});
+        Mockito.when(epic.getProjectId()).thenReturn(2);
         // when
         List<Epic> epics = service.getEpics();
         // then
-        verify(webClient).fetchEpics();
-        verify(epic).getProjectId();
+        Mockito.verify(webClient).fetchEpics();
+        Mockito.verify(epic).getProjectId();
         assertThat(epics).isEmpty();
     }
 
     @Test
     void testFetchingEmptyEpics() {
         // given
-        when(webClient.fetchEpics()).thenReturn(new Epic[]{});
+        Mockito.when(webClient.fetchEpics()).thenReturn(new Epic[]{});
         // when
         List<Epic> epics = service.getEpics();
         // then
-        verify(webClient).fetchEpics();
+        Mockito.verify(webClient).fetchEpics();
         assertThat(epics).isEmpty();
     }
 
@@ -85,13 +83,13 @@ class IssueTrackingServiceTest {
     void testFetchingNullAndFailingEpics(Class<? extends Throwable> clazz) {
         // given
         if (clazz != null) {
-            when(webClient.fetchEpics()).thenThrow(clazz);
+            Mockito.when(webClient.fetchEpics()).thenThrow(clazz);
         } else {
-            when(webClient.fetchEpics()).thenReturn(null);
+            Mockito.when(webClient.fetchEpics()).thenReturn(null);
         }
         // when
         assertThatThrownBy(() -> service.getEpics()).hasMessage("No issues have been fetched.");
         // then
-        verify(webClient).fetchEpics();
+        Mockito.verify(webClient).fetchEpics();
     }
 }

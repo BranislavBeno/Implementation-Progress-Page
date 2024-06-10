@@ -70,12 +70,13 @@ class IssueWebClientTest implements WithAssertions {
         assertThat(epics).hasSize(7);
 
         Epic epic = Arrays.stream(epics).min(Comparator.comparingInt(Epic::getIid)).orElse(null);
-        assertThat(epic).isNotNull();
-        assertThat(epic.getIid()).isEqualTo(1);
-        assertThat(epic.getIssues()).isNull();
-        assertThat(epic.getState()).isEqualTo("opened");
-        assertThat(epic.getTitle()).isEqualTo("Support and maintenance");
-        assertThat(epic.getWebUrl()).isEqualTo("https://gitlab.com/dashboard-tools/Implementation-Progress-Page/-/issues/1");
+        assertThat(epic).isNotNull().satisfies(e -> {
+            assertThat(e.getIid()).isEqualTo(1);
+            assertThat(e.getIssues()).isNull();
+            assertThat(e.getState()).isEqualTo("opened");
+            assertThat(e.getTitle()).isEqualTo("Support and maintenance");
+            assertThat(e.getWebUrl()).isEqualTo("https://gitlab.com/dashboard-tools/Implementation-Progress-Page/-/issues/1");
+        });
     }
 
     @Test
@@ -88,15 +89,16 @@ class IssueWebClientTest implements WithAssertions {
         assertThat(issues).hasSize(3);
 
         Issue issue = Arrays.stream(issues).min(Comparator.comparing(Issue::getIid)).orElse(null);
-        assertThat(issue).isNotNull();
-        assertThat(issue.getIid()).isEqualTo("10");
-        assertThat(issue.getMilestone().getTitle()).isEqualTo("v0.4.0");
-        assertThat(issue.getState()).isEqualTo("closed");
-        assertThat(issue.getTitle()).isEqualTo("Rework DTO projection on Ronja server");
-        assertThat(issue.getWebUrl()).isEqualTo("https://gitlab.com/dashboard-tools/Implementation-Progress-Page/-/issues/10");
-        assertThat(issue.getWorkFlow()).isNull();
-        assertThat(issue.getLabels()).hasSize(2);
-        assertThat(issue.printLabels()).hasSize(20);
+        assertThat(issue).isNotNull().satisfies(i -> {
+            assertThat(i.getIid()).isEqualTo("10");
+            assertThat(i.getMilestone().getTitle()).isEqualTo("v0.4.0");
+            assertThat(i.getState()).isEqualTo("closed");
+            assertThat(i.getTitle()).isEqualTo("Rework DTO projection on Ronja server");
+            assertThat(i.getWebUrl()).isEqualTo("https://gitlab.com/dashboard-tools/Implementation-Progress-Page/-/issues/10");
+            assertThat(i.getWorkFlow()).isNull();
+            assertThat(i.getLabels()).hasSize(2);
+            assertThat(i.printLabels()).hasSize(20);
+        });
     }
 
     private void mockResponse(String url, String json, MockServerClient mockServerClient) {

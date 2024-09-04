@@ -1,11 +1,11 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.1'
+    id 'org.springframework.boot' version '3.3.3'
     id 'io.spring.dependency-management' version '1.1.6'
     id 'jacoco'
     id 'org.sonarqube' version '5.1.0.4882'
-    id 'org.cyclonedx.bom' version '1.8.2'
-    id 'org.openrewrite.rewrite' version '6.16.4'
+    id 'org.cyclonedx.bom' version '1.10.0'
+    id 'org.openrewrite.rewrite' version '6.22.0'
 }
 
 group = 'com.progress.application'
@@ -36,16 +36,16 @@ dependencies {
     implementation "commons-io:commons-io:2.16.1"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
-    testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.0"))
+    testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.1"))
     testImplementation "org.testcontainers:testcontainers"
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:mockserver"
     testImplementation "org.mock-server:mockserver-client-java:5.15.0"
     testImplementation "org.apache.commons:commons-text:1.12.0"
-    testImplementation "org.mockito:mockito-junit-jupiter:5.12.0"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:5.10.3"
+    testImplementation "org.mockito:mockito-junit-jupiter:5.13.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.11.0"
 
-    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.15.0"))
+    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.18.0"))
     rewrite "org.openrewrite.recipe:rewrite-migrate-java"
     rewrite "org.openrewrite.recipe:rewrite-spring"
 }

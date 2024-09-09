@@ -6,16 +6,15 @@ import com.progress.application.project.webclient.IssueWebClient;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
 class IssueTrackingServiceTest implements WithAssertions {
 
@@ -77,19 +76,24 @@ class IssueTrackingServiceTest implements WithAssertions {
         assertThat(epics).isEmpty();
     }
 
-    @ParameterizedTest
-    @NullSource
-    @ValueSource(classes = IssueFetchingException.class)
-    void testFetchingNullAndFailingEpics(Class<? extends Throwable> clazz) {
+    @Test
+    void testFetchingNullEpics() {
         // given
-        if (clazz != null) {
-            Mockito.when(webClient.fetchEpics()).thenThrow(clazz);
-        } else {
-            Mockito.when(webClient.fetchEpics()).thenReturn(null);
-        }
-        // when
+        Mockito.when(webClient.fetchEpics()).thenReturn(null);
+        // when, then
+        assertFailingFetching();
+    }
+
+    @Test
+    void testFetchingFailingEpics() {
+        // given
+        Mockito.when(webClient.fetchEpics()).thenThrow(IssueFetchingException.class);
+        // when, then
+        assertFailingFetching();
+    }
+
+    private void assertFailingFetching() {
         assertThatThrownBy(() -> service.getEpics()).hasMessage("No issues have been fetched.");
-        // then
         Mockito.verify(webClient).fetchEpics();
     }
 }

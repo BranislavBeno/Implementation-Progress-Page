@@ -6,7 +6,7 @@
 [![](https://img.shields.io/badge/Java-21-blue)](/build.gradle)
 [![](https://img.shields.io/badge/Spring%20Boot-3.3.3-blue)](/build.gradle)
 [![](https://img.shields.io/badge/Testcontainers-1.20.1-blue)](/build.gradle)
-[![](https://img.shields.io/badge/Gradle-8.10-blue)](/gradle/wrapper/gradle-wrapper.properties)
+[![](https://img.shields.io/badge/Gradle-8.10.1-blue)](/gradle/wrapper/gradle-wrapper.properties)
 [![](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
 
 ## Backend application for static web page creation

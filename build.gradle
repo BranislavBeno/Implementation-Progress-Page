@@ -5,7 +5,7 @@ plugins {
     id 'jacoco'
     id 'org.sonarqube' version '5.1.0.4882'
     id 'org.cyclonedx.bom' version '1.10.0'
-    id 'org.openrewrite.rewrite' version '6.22.0'
+    id 'org.openrewrite.rewrite' version '6.23.3'
 }
 
 group = 'com.progress.application'
@@ -45,7 +45,7 @@ dependencies {
     testImplementation "org.mockito:mockito-junit-jupiter:5.13.0"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.11.0"
 
-    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.18.0"))
+    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.19.0"))
     rewrite "org.openrewrite.recipe:rewrite-migrate-java"
     rewrite "org.openrewrite.recipe:rewrite-spring"
 }

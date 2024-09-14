@@ -31,3 +31,6 @@ spring:
   application:
     ui:
       title: Ronja CRM progress
+  threads:
+    virtual:
+      enabled: true

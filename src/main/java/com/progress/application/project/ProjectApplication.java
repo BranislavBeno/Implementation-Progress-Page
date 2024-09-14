@@ -8,7 +8,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @SpringBootApplication
 public class ProjectApplication {
@@ -17,7 +16,7 @@ public class ProjectApplication {
 
     ProjectApplication(WebPageProvider pageProvider) {
         try {
-            Path destination = Paths.get("public/index.html");
+            Path destination = Path.of("public/index.html");
             pageProvider.provideWebPage(destination);
         } catch (IssueFetchingException e) {
             LOGGER.warn(e.getMessage());

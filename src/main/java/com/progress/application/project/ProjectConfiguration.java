@@ -17,53 +17,53 @@ import org.springframework.core.io.ResourceLoader;
 class ProjectConfiguration {
 
     @Bean
-    public EpicData epicData(@Value("${issue.tracker.epics.url}") String url,
-                             @Value("${issue.tracker.epics.labels}") String labels,
-                             @Value("${issue.tracker.epics.per-page-limit}") String perPageLimit,
-                             @Value("${issue.tracker.epics.scope}") String scope,
-                             @Value("${issue.tracker.epics.state}") String state) {
+    EpicData epicData(@Value("${issue.tracker.epics.url}") String url,
+            @Value("${issue.tracker.epics.labels}") String labels,
+            @Value("${issue.tracker.epics.per-page-limit}") String perPageLimit,
+            @Value("${issue.tracker.epics.scope}") String scope,
+            @Value("${issue.tracker.epics.state}") String state) {
         return new EpicData(url, labels, perPageLimit, scope, state);
     }
 
     @Bean
-    public IssueData issueData(@Value("${issue.tracker.issues.url}") String url,
-                               @Value("${issue.tracker.issues.per-page-limit}") String perPageLimit,
-                               @Value("${issue.tracker.issues.scope}") String scope,
-                               @Value("${issue.tracker.issues.state}") String state) {
+    IssueData issueData(@Value("${issue.tracker.issues.url}") String url,
+            @Value("${issue.tracker.issues.per-page-limit}") String perPageLimit,
+            @Value("${issue.tracker.issues.scope}") String scope,
+            @Value("${issue.tracker.issues.state}") String state) {
         return new IssueData(url, perPageLimit, scope, state);
     }
 
     @Bean
-    public AccessData accessRecord(@Value("${issue.tracker.group-id}") String groupId,
-                                   @Value("${issue.tracker.project-id}") String projectId,
-                                   @Value("${issue.tracker.access-token}") String accessToken,
-                                   @Value("${issue.tracker.uri}") String baseUrl,
-                                   @Autowired EpicData epicData,
-                                   @Autowired IssueData issueData) {
+    AccessData accessRecord(@Value("${issue.tracker.group-id}") String groupId,
+            @Value("${issue.tracker.project-id}") String projectId,
+            @Value("${issue.tracker.access-token}") String accessToken,
+            @Value("${issue.tracker.uri}") String baseUrl,
+            @Autowired EpicData epicData,
+            @Autowired IssueData issueData) {
         return new AccessData(groupId, projectId, accessToken, baseUrl, epicData, issueData);
     }
 
     @Bean
-    public IssueWebClient issueWebClient(@Autowired AccessData accessData) {
+    IssueWebClient issueWebClient(@Autowired AccessData accessData) {
         return new IssueWebClient(accessData);
     }
 
     @Bean
-    public IssueTrackingService issueTrackingService(@Autowired IssueWebClient issueWebClient,
-                                                     @Value("${issue.tracker.project-id}") String projectId,
-                                                     @Autowired WorkflowData workflowData) {
+    IssueTrackingService issueTrackingService(@Autowired IssueWebClient issueWebClient,
+            @Value("${issue.tracker.project-id}") String projectId,
+            @Autowired WorkflowData workflowData) {
         return new IssueTrackingService(issueWebClient, projectId, workflowData);
     }
 
     @Bean
-    public HtmlRenderingService htmlRenderingService(@Value(value = "${spring.application.ui.title:Progress}") String title,
-                                                     @Autowired IssueTrackingService issueTrackingService) {
+    HtmlRenderingService htmlRenderingService(@Value(value = "${spring.application.ui.title:Progress}") String title,
+            @Autowired IssueTrackingService issueTrackingService) {
         return new HtmlRenderingService(title, issueTrackingService);
     }
 
     @Bean
-    public WebPageProvider webPageProvider(@Autowired HtmlRenderingService renderingService,
-                                           @Autowired ResourceLoader resourceLoader) {
+    WebPageProvider webPageProvider(@Autowired HtmlRenderingService renderingService,
+            @Autowired ResourceLoader resourceLoader) {
         return new WebPageProvider(renderingService, resourceLoader);
     }
 }

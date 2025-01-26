@@ -5,7 +5,7 @@ plugins {
     id 'jacoco'
     id 'org.sonarqube' version '6.0.1.5171'
     id 'org.cyclonedx.bom' version '2.0.0'
-    id 'org.openrewrite.rewrite' version '7.0.3'
+    id 'org.openrewrite.rewrite' version '7.0.4'
 }
 
 group = 'com.progress.application'
@@ -43,7 +43,7 @@ dependencies {
     testImplementation "org.mock-server:mockserver-client-java:5.15.0"
     testImplementation "org.apache.commons:commons-text:1.13.0"
 
-    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:3.0.2"))
+    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:3.1.0"))
     rewrite "org.openrewrite.recipe:rewrite-migrate-java"
     rewrite "org.openrewrite.recipe:rewrite-spring"
 }

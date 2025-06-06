@@ -5,8 +5,8 @@
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=BranislavBeno_ImplementationProgressPage&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=BranislavBeno_ImplementationProgressPage)  
 [![](https://img.shields.io/badge/Java-21-blue)](/build.gradle)
 [![](https://img.shields.io/badge/Spring%20Boot-3.5.0-blue)](/build.gradle)
-[![](https://img.shields.io/badge/Testcontainers-1.21.0-blue)](/build.gradle)
-[![](https://img.shields.io/badge/Gradle-8.14.1-blue)](/gradle/wrapper/gradle-wrapper.properties)
+[![](https://img.shields.io/badge/Testcontainers-1.21.1-blue)](/build.gradle)
+[![](https://img.shields.io/badge/Gradle-8.14.2-blue)](/gradle/wrapper/gradle-wrapper.properties)
 [![](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)  
 
 ## Backend application for static web page creation

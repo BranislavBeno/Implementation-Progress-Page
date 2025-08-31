@@ -1,11 +1,11 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.5.4'
+    id 'org.springframework.boot' version '3.5.5'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'jacoco'
-    id 'org.sonarqube' version '6.2.0.5505'
+    id 'org.sonarqube' version '6.3.1.5724'
     id 'org.cyclonedx.bom' version '2.3.1'
-    id 'org.openrewrite.rewrite' version '7.12.1'
+    id 'org.openrewrite.rewrite' version '7.15.0'
 }
 
 group = 'com.progress.application'
@@ -43,7 +43,7 @@ dependencies {
     testImplementation "org.mock-server:mockserver-client-java:5.15.0"
     testImplementation "org.apache.commons:commons-text:1.14.0"
 
-    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:3.12.1"))
+    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:3.14.0"))
     rewrite "org.openrewrite.recipe:rewrite-migrate-java"
     rewrite "org.openrewrite.recipe:rewrite-spring"
 }

@@ -23,7 +23,7 @@ public class ProjectApplication {
         }
     }
 
-    public static void main(String[] args) {
+    void main() {
         ConfigurableApplicationContext applicationContext;
         applicationContext = new SpringApplicationBuilder(ProjectApplication.class).run();
         applicationContext.close();

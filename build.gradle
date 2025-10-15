@@ -36,7 +36,7 @@ dependencies {
     implementation "commons-io:commons-io:2.20.0"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
-    testImplementation(platform("org.testcontainers:testcontainers-bom:1.21.3"))
+    testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.0"))
     testImplementation "org.testcontainers:testcontainers"
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:mockserver"

@@ -44,7 +44,7 @@ public class HtmlRenderingService {
             Integer v1 = parseRelease(c1);
             Integer v2 = parseRelease(c2);
             return v2.compareTo(v1);
-        } catch (Exception e) {
+        } catch (Exception _) {
             return c2.compareTo(c1);
         }
     }

@@ -2,6 +2,7 @@ package com.progress.application.project.webclient;
 
 import com.progress.application.project.domain.Epic;
 import com.progress.application.project.domain.Issue;
+import org.apache.commons.io.FileUtils;
 import org.assertj.core.api.WithAssertions;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
@@ -17,9 +18,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.MockServerContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.shaded.org.apache.commons.io.FileUtils;
+import org.testcontainers.mockserver.MockServerContainer;
 import org.testcontainers.utility.DockerImageName;
 
 import java.io.File;
@@ -126,6 +126,7 @@ class IssueWebClientTest implements WithAssertions {
 
         @Override
         public void initialize(@NotNull ConfigurableApplicationContext applicationContext) {
+            // no initialization required
         }
     }
 }

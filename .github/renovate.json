@@ -13,7 +13,7 @@
     {
       "groupName" : "all non-major dependencies",
       "groupSlug" : "all-minor-patch",
-      "matchPackagePatterns" : [
+      "matchPackageNames" : [
         "*"
       ],
       "matchUpdateTypes" : [
@@ -23,13 +23,14 @@
     }
   ],
   "ignorePaths": [],
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": [
-        "src/test/java/.+\\.java$"
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/src/test/java/.+\\.java$/"
       ],
       "matchStrings": [
-        "\"(?<depName>.*?):(?<currentValue>.*?)\""
+        "\"(?<depName>[\\w./-]+/[\\w.-]+):(?<currentValue>[\\w.-]+)\""
       ],
       "datasourceTemplate": "docker"
     }

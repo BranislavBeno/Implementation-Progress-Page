@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
+import org.mockserver.version.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContextInitializer;
@@ -34,8 +35,10 @@ import java.util.Comparator;
 @Import(ProjectTestConfiguration.class)
 class IssueWebClientTest implements WithAssertions {
 
+    // Image tag must track the mockserver-client-java version on the test classpath:
+    // MockServerClient enforces a hard major.minor compatibility check against the server.
     private static final MockServerContainer MOCK_SERVER = new MockServerContainer(
-            DockerImageName.parse("mockserver/mockserver:mockserver-5.15.0"));
+            DockerImageName.parse("mockserver/mockserver").withTag(Version.getVersion()));
     private static final String BASE_URL;
 
     static {

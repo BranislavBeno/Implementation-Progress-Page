@@ -5,16 +5,17 @@ WORKDIR /project
 # create fat jar
 RUN chmod +x gradlew && ./gradlew assemble && cp build/libs/impl-progress.jar ./
 # extrect layered jar file
-RUN java -Djarmode=layertools -jar impl-progress.jar extract
+RUN java -Djarmode=tools -jar impl-progress.jar extract --layers --destination extracted
 
 FROM azul/zulu-openjdk-alpine:25.0.3-jre-headless
 # install dumb-init
-RUN apk add --no-cache dumb-init=1.2.5-r3
+RUN apk update
+RUN apk add --no-cache --upgrade dumb-init
 RUN mkdir /app
 # set work directory
 WORKDIR /app
 # copy jar from build stage
-COPY --from=build /project/spring-boot-loader/ ./
-COPY --from=build /project/snapshot-dependencies/ ./
-COPY --from=build /project/dependencies/ ./
-COPY --from=build /project/application/ ./
+COPY --from=build /project/extracted/spring-boot-loader/ ./
+COPY --from=build /project/extracted/snapshot-dependencies/ ./
+COPY --from=build /project/extracted/dependencies/ ./
+COPY --from=build /project/extracted/application/ ./

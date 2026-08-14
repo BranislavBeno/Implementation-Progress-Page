@@ -5,7 +5,7 @@ WORKDIR /project
 # create fat jar
 RUN chmod +x gradlew && ./gradlew assemble && cp build/libs/impl-progress.jar ./
 # extrect layered jar file
-RUN java -Djarmode=tools -jar impl-progress.jar extract --layers --destination extracted
+RUN java -Djarmode=tools -jar impl-progress.jar extract --layers --launcher --destination extracted
 
 FROM azul/zulu-openjdk-alpine:25.0.3-jre-headless
 # install dumb-init

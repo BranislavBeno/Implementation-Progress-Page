@@ -40,7 +40,7 @@ dependencies {
     testImplementation "org.testcontainers:testcontainers"
     testImplementation "org.testcontainers:testcontainers-junit-jupiter"
     testImplementation "org.testcontainers:testcontainers-mockserver"
-    testImplementation "org.mock-server:mockserver-client-java:7.5.0"
+    testImplementation "org.mock-server:mockserver-client-java:7.6.0"
     testImplementation "org.apache.commons:commons-text:1.15.0"
 
     rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:3.37.0"))

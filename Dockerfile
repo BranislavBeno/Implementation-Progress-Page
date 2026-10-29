@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM azul/zulu-openjdk-alpine:25.0.4.1 AS build
+FROM azul/zulu-openjdk-alpine:25.0.5 AS build
 RUN mkdir /project
 COPY . /project
 WORKDIR /project
@@ -11,7 +11,7 @@ RUN --mount=type=secret,id=codegenome_token \
 # extrect layered jar file
 RUN java -Djarmode=tools -jar impl-progress.jar extract --layers --launcher --destination extracted
 
-FROM azul/zulu-openjdk-alpine:25.0.4.1-jre-headless
+FROM azul/zulu-openjdk-alpine:25.0.5-jre-headless
 # install dumb-init
 RUN apk update
 RUN apk add --no-cache --upgrade dumb-init
